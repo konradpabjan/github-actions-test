@@ -36,7 +36,7 @@ jobs:
       java-version: ${{ matrix.jdk }}
   send-notification:
     name: Send Notification 1
-    needs: [ test ]
+    needs: [ build ]
     if: failure()
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +44,7 @@ jobs:
         run: echo "This would send a notificaiton"
   send-notification2:
     name: Send Notification 2
-    needs: [ test ]
+    needs: [ build ]
     env: 
       NEEDS_CONTEXT: ${{ toJSON(needs) }}
     if: always()
@@ -56,7 +56,7 @@ jobs:
           echo $NEEDS_CONTEXT
   send-notification3:
     name: Send Notification 3
-    needs: [ test ]
+    needs: [ build ]
     if: ${{ !success() }}
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,7 @@ jobs:
         run: echo "This would send a notificaiton"
   send-notification4:
     name: Send Notification 4
-    needs: [ test ]
+    needs: [ build ]
     if: cancelled()
     runs-on: ubuntu-latest
     steps:
