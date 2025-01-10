@@ -45,11 +45,15 @@ jobs:
   send-notification2:
     name: Send Notification 2
     needs: [ test ]
+    env: 
+      NEEDS_CONTEXT: ${{ toJSON(needs) }}
     if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
-        run: echo "This would send a notificaiton"
+        run: |
+          echo "This would send a notificaiton"
+          echo $NEEDS_CONTEXT
   send-notification3:
     name: Send Notification 3
     needs: [ test ]
