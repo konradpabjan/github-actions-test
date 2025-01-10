@@ -102,7 +102,7 @@ jobs:
   send-notification3:
     name: Send Notification 3
     needs: [ build, test, check-samples, check-tangles ]
-    if: ${{ success() }}
+    if: ${{ success() || failure() || cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
