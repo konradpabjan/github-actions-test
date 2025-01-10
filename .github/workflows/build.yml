@@ -86,7 +86,7 @@ jobs:
   send-notification:
     name: Send Notification 1
     needs: [ build, test, check-samples, check-tangles ]
-    if: ${{ failure() || cancelled() }}
+    if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
@@ -102,7 +102,15 @@ jobs:
   send-notification3:
     name: Send Notification 3
     needs: [ build, test, check-samples, check-tangles ]
-    if: ${{ success() || failure() || cancelled() }}
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Notification
+        run: echo "This would send a notificaiton"
+  send-notification4:
+    name: Send Notification 4
+    needs: [ build, test, check-samples, check-tangles ]
+    if: ${{ cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
