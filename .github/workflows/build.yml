@@ -84,9 +84,25 @@ jobs:
     needs: [ deploy-artifacts, deploy-docs, deploy-schema ]
     secrets: inherit
   send-notification:
-    name: Send Notification
+    name: Send Notification 1
     needs: [ build, test, check-samples, check-tangles ]
     if: ${{ failure() || cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Notification
+        run: echo "This would send a notificaiton"
+  send-notification2:
+    name: Send Notification 2
+    needs: [ build, test, check-samples, check-tangles ]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Notification
+        run: echo "This would send a notificaiton"
+  send-notification3:
+    name: Send Notification 3
+    needs: [ build, test, check-samples, check-tangles ]
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
