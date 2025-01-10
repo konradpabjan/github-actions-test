@@ -29,6 +29,7 @@ jobs:
     name: Test
     uses: ./.github/workflows/test.yml
     strategy:
+      fail-fast: false
       matrix:
         jdk: [ '17', '21' ]
     with:
@@ -36,7 +37,7 @@ jobs:
       java-version: ${{ matrix.jdk }}
   send-notification:
     name: Send Notification 1
-    needs: [ build ]
+    needs: [ test ]
     if: failure()
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +45,7 @@ jobs:
         run: echo "This would send a notificaiton"
   send-notification2:
     name: Send Notification 2
-    needs: [ build ]
+    needs: [ test ]
     env: 
       NEEDS_CONTEXT: ${{ toJSON(needs) }}
     if: always()
@@ -56,7 +57,7 @@ jobs:
           echo $NEEDS_CONTEXT
   send-notification3:
     name: Send Notification 3
-    needs: [ build ]
+    needs: [ test ]
     if: ${{ !success() }}
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +65,7 @@ jobs:
         run: echo "This would send a notificaiton"
   send-notification4:
     name: Send Notification 4
-    needs: [ build ]
+    needs: [ test ]
     if: cancelled()
     runs-on: ubuntu-latest
     steps:
