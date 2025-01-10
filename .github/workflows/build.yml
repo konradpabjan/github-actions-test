@@ -36,8 +36,8 @@ jobs:
       java-version: ${{ matrix.jdk }}
   send-notification:
     name: Send Notification 1
-    needs: [ build, test ]
-    if: ${{ failure() }}
+    needs: [ test ]
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
@@ -45,15 +45,15 @@ jobs:
   send-notification2:
     name: Send Notification 2
     needs: [ build, test ]
-    if: ${{ always() }}
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
         run: echo "This would send a notificaiton"
   send-notification3:
     name: Send Notification 3
-    needs: [ build, test ]
-    if: ${{ success() }}
+    needs: [ test ]
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
@@ -61,7 +61,7 @@ jobs:
   send-notification4:
     name: Send Notification 4
     needs: [ test ]
-    if: ${{ cancelled() }}
+    if: cancelled()
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
