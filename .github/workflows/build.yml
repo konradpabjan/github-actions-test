@@ -44,7 +44,7 @@ jobs:
         run: echo "This would send a notificaiton"
   send-notification2:
     name: Send Notification 2
-    needs: [ build, test ]
+    needs: [ test ]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +53,7 @@ jobs:
   send-notification3:
     name: Send Notification 3
     needs: [ test ]
-    if: success()
+    if: ${{ !success() }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Notification
